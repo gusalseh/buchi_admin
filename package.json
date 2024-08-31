@@ -1,0 +1,21 @@
+{
+  "name": "buchi_admin",
+  "version": "1.0.0",
+  "description": "backside working repo",
+  "main": "src/service.js",
+  "scripts": {
+    "start": "node src/service.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.637.0",
+    "aws-sdk": "^2.1687.0",
+    "axios": "^1.7.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "sequelize": "^6.37.3"
+  }
+}
