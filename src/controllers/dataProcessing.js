@@ -10,8 +10,11 @@ const extractFirstRow = async (req, res) => {
     // sheet1Data에서 첫 번째 행을 추출
     const firstRow = sheet1Data[0]; // 첫 번째 행
 
+    // "식당주소" 키에 접근
+    const restaurantAddress = firstRow['식당주소']; // 첫 번째 행의 식당주소 key
+
     // console.log('First Row Data:', firstRow);
-    res.json({ firstRow });
+    res.json({ restaurantAddress });
   } catch (error) {
     console.error('Error extracting first row:', error);
     res.status(500).json({ error: 'Failed to extract first row' });
