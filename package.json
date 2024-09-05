@@ -13,6 +13,7 @@
     "@aws-sdk/client-s3": "^3.637.0",
     "aws-sdk": "^2.1687.0",
     "axios": "^1.7.6",
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.11.0",
