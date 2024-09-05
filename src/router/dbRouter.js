@@ -9,7 +9,7 @@ router.post("/spotNameAddress", async (req, res) => {
     const jsonData = await processSpotJsonData();
     console.log("jsonData:", jsonData);
 
-    // 식당명과 식당 도로명주소 데이터를 DB에 저장
+    // 식당명과 식당 데이터를 DB에 저장
     for (const [spot_name, spot_address] of jsonData) {
       await Spot.create({ spot_name, spot_address });
     }
