@@ -1,23 +1,26 @@
 // routes/spot.js
-const express = require('express');
+const express = require("express");
+const axios = require("axios");
 const router = express.Router();
-const { Spot } = require('../models'); // Spot 모델 가져오기
-const { processSpotJsonData } = require('../services/spotProcessing');
+const { Spot } = require("../models"); // Spot 모델 가져오기
+const { processSpotJsonData } = require("../services/spotProcessing");
 
-router.post('/spotTable', async (req, res) => {
+router.post("/spotTable/nameAndCoords", async (req, res) => {
   try {
     const jsonData = await processSpotJsonData();
-    console.log('jsonData:', jsonData);
+    console.log("jsonData:", jsonData);
 
-    // spot 테이블 데이터
+    // spot 테이블 식당명, 식당주소, 식당위도, 식당경도 데이터
     for (const [spot_name, spot_address] of jsonData) {
       try {
         const response = await axios.get(
-          `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(spot_address)}`,
+          `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(
+            spot_address
+          )}`,
           {
             headers: {
-              'X-NCP-APIGW-API-KEY-ID': process.env.NAVER_MAP_CLIENT_ID,
-              'X-NCP-APIGW-API-KEY': process.env.NAVER_MAP_CLIENT_SECRET,
+              "X-NCP-APIGW-API-KEY-ID": process.env.NAVER_MAP_CLIENT_ID,
+              "X-NCP-APIGW-API-KEY": process.env.NAVER_MAP_CLIENT_SECRET,
             },
           }
         );
@@ -36,15 +39,18 @@ router.post('/spotTable', async (req, res) => {
           spot_lng: longitude,
         });
       } catch (geocodeError) {
-        console.error(`Error fetching geocode for address: ${spot_address}`, geocodeError.message);
+        console.error(
+          `Error fetching geocode for address: ${spot_address}`,
+          geocodeError.message
+        );
         continue;
       }
     }
 
-    res.status(200).json({ message: 'Data saved successfully!' });
+    res.status(200).json({ message: "Data saved successfully!" });
   } catch (error) {
-    console.error('Error saving spot data:', error);
-    res.status(500).json({ error: 'Error saving spot data' });
+    console.error("Error saving spot data:", error);
+    res.status(500).json({ error: "Error saving spot data" });
   }
 });
 
