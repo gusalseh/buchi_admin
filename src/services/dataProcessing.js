@@ -1,5 +1,5 @@
 const { processSheet } = require("../controllers/dataGet");
-const { Menu } = require("../models");
+const { Menu, Visit } = require("../models");
 
 // 첫 번째 시트에서 spot 테이블에 넣을 데이터들
 const extractSpotInfoSheet = async (req, res) => {
@@ -7,8 +7,6 @@ const extractSpotInfoSheet = async (req, res) => {
     const spotData = await processSheet(1);
 
     const resultRows = spotData.slice(0, 200);
-
-    console.log("length:", resultRows.length);
 
     return resultRows;
   } catch (error) {
@@ -77,4 +75,35 @@ const extractMenuInfoSheet = async (req, res) => {
   }
 };
 
-module.exports = { extractSpotInfoSheet, extractMenuInfoSheet };
+// 첫 번째 시트에서 visit, review 테이블에 넣을 데이터들
+const extractLogInfoSheet = async (req, res) => {
+  try {
+    const spotData = await processSheet(2);
+
+    spotData.map(async (row, idx) => {
+      const spot_id = parseInt(row["식당아이디"].replace("restaurant", ""), 10);
+      const visit_id = idx + 1;
+      const user_id = (spot_id % 5) + 1;
+
+      console.log(visit_id);
+      console.log(user_id);
+      console.log(spot_id);
+      console.log("-----------");
+
+      // await Visit.create({
+      //   visit_id,
+      //   user_id,
+      //   spot_id,
+      // });
+    });
+  } catch (error) {
+    console.error("Error extracting log data sheet:", error);
+    throw new Error("Failed to extract log data sheet");
+  }
+};
+
+module.exports = {
+  extractSpotInfoSheet,
+  extractMenuInfoSheet,
+  extractLogInfoSheet,
+};

@@ -17,7 +17,6 @@ const processSheet = async (targetSheet) => {
     const sheet = getSheetByName(workbook, sheetName);
     const jsonData = sheetToJson(sheet);
 
-    console.log("Processed Sheet 1 Data:", jsonData);
     return jsonData;
   } catch (error) {
     console.error("Error processing Sheet 1:", error);
