@@ -1,7 +1,7 @@
-const xlsx = require('xlsx');
+const xlsx = require("xlsx");
 
 const parseExcelFile = (fileBuffer) => {
-  const workbook = xlsx.read(fileBuffer, { type: 'buffer' });
+  const workbook = xlsx.read(fileBuffer, { type: "buffer" });
   return workbook;
 };
 
