@@ -2,12 +2,15 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
-const { Spot } = require("../models"); // Spot 모델 가져오기
+const { Spot } = require("../models");
 const {
   processSpotJsonData,
   processSpotExcelData,
 } = require("../services/spotProcessing");
-const { extractSpotInfoSheet } = require("../services/dataProcessing");
+const {
+  extractSpotInfoSheet,
+  extractMenuInfoSheet,
+} = require("../services/dataProcessing");
 
 router.post("/spotTable/nameAndCoords", async (req, res) => {
   try {
@@ -98,6 +101,17 @@ router.post("/spotTable/extraColumns", async (req, res) => {
       // spot_id로 기존 데이터를 찾고 업데이트
       const spot = await Spot.findByPk(spot_id);
 
+      // 월화수목금토일 영업일
+      const openday_list = [
+        "1111100",
+        "1111110",
+        "1111101",
+        "1111111",
+        "0111111",
+      ];
+
+      const open_day = openday_list[spot_id % 5];
+
       if (spot) {
         await spot.update({
           private_room,
@@ -106,6 +120,7 @@ router.post("/spotTable/extraColumns", async (req, res) => {
           corkage,
           max_group_seats: parseInt(max_group_seats, 10),
           tel,
+          open_day,
           rental,
           placard,
           indoor_toilet,
@@ -171,6 +186,44 @@ router.post("/spotTable/imageUrls", async (req, res) => {
   } catch (error) {
     console.error("Error saving spot image URL data:", error);
     res.status(500).json({ error: "Error saving spot image URL data" });
+  }
+});
+
+router.post("/spotTable/openday", async (req, res) => {
+  try {
+    for (let spot_id = 1; spot_id <= 200; spot_id++) {
+      const spot = await Spot.findByPk(spot_id);
+
+      if (spot) {
+        // 월화수목금토일 영업일
+        const openday_list = [
+          "1111100",
+          "1111110",
+          "1111101",
+          "1111111",
+          "0111111",
+        ];
+
+        spot.open_day = openday_list[spot_id % 5];
+
+        await spot.save();
+      }
+    }
+
+    res.status(200).json({ message: "openday columns saved successfully!" });
+  } catch (error) {
+    console.error("Error saving spot openday columns data:", error);
+    res.status(500).json({ error: "Error saving spot openday columns data" });
+  }
+});
+
+router.post("/menuTable", async (req, res) => {
+  try {
+    await extractMenuInfoSheet();
+    res.status(200).json({ message: "Menu data saved successfully!" });
+  } catch (error) {
+    console.error("Error saving menu data:", error);
+    res.status(500).json({ error: "Failed to save menu data" });
   }
 });
 

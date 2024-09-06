@@ -1,5 +1,8 @@
 const express = require("express");
-const { extractSpotInfoSheet } = require("../services/dataProcessing");
+const {
+  extractSpotInfoSheet,
+  extractMenuInfoSheet,
+} = require("../services/dataProcessing");
 const {
   processSpotExcelData,
   processSpotJsonData,
@@ -7,6 +10,8 @@ const {
 const router = express.Router();
 
 router.get("/buchi/1", extractSpotInfoSheet);
+
+router.get("/buchi/4", extractMenuInfoSheet);
 
 router.get("/spotExcel", processSpotExcelData);
 

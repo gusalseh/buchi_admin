@@ -72,7 +72,7 @@ class Spot extends Sequelize.Model {
         },
         // 0000000(일주일의 boolean화)
         open_day: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING(20),
           allowNull: true,
         },
         rental: {
