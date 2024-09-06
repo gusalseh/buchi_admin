@@ -1,21 +1,21 @@
 const { processSheet1 } = require("../controllers/dataGet"); // processSheet1 함수 가져오기
 
 // 첫 번째 시트에서 spot 테이블에 넣을 데이터들
-const extractFirstRow = async (req, res) => {
+const extractSpotInfoSheet = async (req, res) => {
   try {
     const sheet1Data = await processSheet1();
 
-    // sheet1Data에서 첫 번째 행을 추출
-    const firstRow = sheet1Data[0];
+    const resultRows = sheet1Data.slice(0, 200);
 
-    // "식당주소" 키에 접근
-    const restaurantAddress = firstRow["식당주소"]; // 첫 번째 행의 식당주소 key
+    console.log("length:", resultRows.length);
 
-    res.json({ firstRow });
+    // res.json({ resultRows });
+    return resultRows;
   } catch (error) {
-    console.error("Error extracting first row:", error);
-    res.status(500).json({ error: "Failed to extract first row" });
+    console.error("Error extracting spot data sheet:", error);
+    // res.status(500).json({ error: "Failed to extract spot data sheet" });
+    throw new Error("Failed to extract spot data sheet");
   }
 };
 
-module.exports = { extractFirstRow };
+module.exports = { extractSpotInfoSheet };
