@@ -3,7 +3,10 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const { Spot } = require("../models"); // Spot 모델 가져오기
-const { processSpotJsonData } = require("../services/spotProcessing");
+const {
+  processSpotJsonData,
+  processSpotExcelData,
+} = require("../services/spotProcessing");
 const { extractSpotInfoSheet } = require("../services/dataProcessing");
 
 router.post("/spotTable/nameAndCoords", async (req, res) => {
@@ -119,6 +122,55 @@ router.post("/spotTable/extraColumns", async (req, res) => {
   } catch (error) {
     console.error("Error saving spot extra data:", error);
     res.status(500).json({ error: "Error saving spot extra data" });
+  }
+});
+
+router.post("/spotTable/imageUrls", async (req, res) => {
+  try {
+    const jsonData = await processSpotExcelData(); // 이미지 URL 데이터를 불러옴
+    console.log("jsonData:", jsonData);
+
+    const totalImages = jsonData.length;
+    let imageIndex = 0;
+
+    // spot 테이블 기준으로 순회
+    for (let spot_id = 1; spot_id <= 200; spot_id++) {
+      const spot = await Spot.findByPk(spot_id);
+
+      if (spot) {
+        const existingImages = [
+          spot.spot_main_img,
+          spot.spot_sub_img_1,
+          spot.spot_sub_img_2,
+          spot.spot_sub_img_3,
+          spot.spot_sub_img_4,
+          spot.spot_sub_img_5,
+        ];
+
+        for (let i = 0; i < existingImages.length; i++) {
+          if (!existingImages[i]) {
+            const imageUrl = jsonData[imageIndex]["식당이미지(URL)"];
+
+            if (i === 0) spot.spot_main_img = imageUrl;
+            else if (i === 1) spot.spot_sub_img_1 = imageUrl;
+            else if (i === 2) spot.spot_sub_img_2 = imageUrl;
+            else if (i === 3) spot.spot_sub_img_3 = imageUrl;
+            else if (i === 4) spot.spot_sub_img_4 = imageUrl;
+            else if (i === 5) spot.spot_sub_img_5 = imageUrl;
+
+            // 이미지 인덱스를 업데이트 (마지막 이미지면 처음으로 돌아감)
+            imageIndex = (imageIndex + 1) % totalImages;
+          }
+        }
+
+        await spot.save();
+      }
+    }
+
+    res.status(200).json({ message: "Image URLs saved successfully!" });
+  } catch (error) {
+    console.error("Error saving spot image URL data:", error);
+    res.status(500).json({ error: "Error saving spot image URL data" });
   }
 });
 

@@ -29,7 +29,6 @@ class Spot extends Sequelize.Model {
         private_room: {
           type: Sequelize.BOOLEAN,
           allowNull: true,
-          defaultValue: false,
         },
         parking_lot: {
           type: Sequelize.INTEGER,
@@ -79,22 +78,18 @@ class Spot extends Sequelize.Model {
         rental: {
           type: Sequelize.BOOLEAN,
           allowNull: true,
-          defaultValue: false,
         },
         placard: {
           type: Sequelize.BOOLEAN,
           allowNull: true,
-          defaultValue: false,
         },
         indoor_toilet: {
           type: Sequelize.BOOLEAN,
           allowNull: true,
-          defaultValue: false,
         },
         wheelchair: {
           type: Sequelize.BOOLEAN,
           allowNull: true,
-          defaultValue: false,
         },
         promotion: {
           type: Sequelize.STRING(200),

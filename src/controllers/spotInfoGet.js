@@ -18,7 +18,7 @@ const processSpotImageExcel = async () => {
     const jsonData = sheetToJson(sheet);
 
     console.log("Processed spot name and image Data:", jsonData);
-    return jsonData; // 데이터를 반환
+    return jsonData;
   } catch (error) {
     console.error("Error processing spot name and image:", error);
     throw new Error("Failed to process spot name and image");

@@ -7,17 +7,15 @@ const {
 const processSpotExcelData = async (req, res) => {
   try {
     const excelData = await processSpotImageExcel();
-    // sheet1Data에서 첫 번째 행을 추출
-    const firstRow = excelData[0]; // 첫 번째 행
 
-    // "식당주소" 키에 접근
-    const restaurantAddress = firstRow; // 첫 번째 행의 식당주소 key
+    const resultRows = excelData.slice(0, 200);
 
-    // console.log('First Row Data:', firstRow);
-    res.json({ restaurantAddress });
+    console.log("length:", resultRows.length);
+
+    return resultRows;
   } catch (error) {
     console.error("Error extracting first row:", error);
-    res.status(500).json({ error: "Failed to extract first row" });
+    throw error;
   }
 };
 
