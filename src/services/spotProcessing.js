@@ -3,14 +3,12 @@ const {
   processSpotInfoJson,
 } = require("../controllers/spotInfoGet");
 
-// CSV 데이터 처리
+// Excel 데이터 처리
 const processSpotExcelData = async (req, res) => {
   try {
     const excelData = await processSpotImageExcel();
 
     const resultRows = excelData.slice(0, 200);
-
-    console.log("length:", resultRows.length);
 
     return resultRows;
   } catch (error) {
@@ -31,13 +29,11 @@ const processSpotJsonData = async (req, res) => {
       return [item.bplcnm, addressParts.join(" ")];
     });
 
-    console.log("Extracted Array:", resultArray);
-
     return resultArray;
   } catch (error) {
     console.error("Error processing JSON data:", error);
 
-    throw error; // 에러를 다시 던져서 호출한 곳에서 처리하도록 함
+    throw error;
   }
 };
 

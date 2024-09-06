@@ -32,7 +32,6 @@ const processSpotInfoJson = async () => {
   try {
     const fileBuffer = await getFile(fileKey);
 
-    // JSON 파일 파싱
     const jsonData = JSON.parse(fileBuffer.toString());
     console.log("Processed JSON Data:", jsonData);
 
