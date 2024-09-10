@@ -39,7 +39,6 @@ const getMenuImages = async () => {
 
     const command = new ListObjectsV2Command(params);
     const data = await s3.send(command);
-    console.log('s3 data:', data);
 
     return data.Contents ? data.Contents.map((item) => item.Key) : [];
   } catch (error) {

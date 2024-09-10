@@ -61,13 +61,9 @@ const extractMenuInfoSheet = async (req, res) => {
       for (const menu of menus) {
         const menuType = menuTypeMapping[menu['메뉴타입']];
 
-        // S3에서 menu_name을 포함하는 이미지 파일을 검색
         const matchingImage = s3MenuImages.find((image) => image.includes(menu['메뉴명']));
-
-        // S3 URL 생성 (CloudFront 대신 S3 URL 사용)
         const menu_img = matchingImage ? getS3Url(matchingImage) : null;
 
-        // Menu 테이블에 데이터 저장
         await Menu.create({
           spot_id,
           menu_name: menu['메뉴명'],
