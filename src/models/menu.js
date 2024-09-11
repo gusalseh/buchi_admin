@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
 
 class Menu extends Sequelize.Model {
   static initiate(sequelize) {
@@ -14,8 +14,8 @@ class Menu extends Sequelize.Model {
           type: DataTypes.INTEGER,
           primaryKey: true,
           references: {
-            model: "spot",
-            key: "spot_id",
+            model: 'spot',
+            key: 'spot_id',
           },
         },
         menu_name: {
@@ -24,7 +24,7 @@ class Menu extends Sequelize.Model {
         },
         menu_type: {
           type: DataTypes.ENUM,
-          values: ["maindish", "sidedish", "liquar", "beverage"],
+          values: ['maindish', 'sidedish', 'liquar', 'beverage'],
           allowNull: false,
         },
         price: {
@@ -40,15 +40,20 @@ class Menu extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "Menu",
-        tableName: "menu",
+        modelName: 'Menu',
+        tableName: 'menu',
         paranoid: true,
-        charset: "utf8",
-        collate: "utf8_general_ci",
+        charset: 'utf8',
+        collate: 'utf8_general_ci',
       }
     );
   }
-  static associate(models) {}
+  static associate(models) {
+    Menu.belongsTo(models.Spot, {
+      foreignKey: 'spot_id',
+      targetKey: 'spot_id',
+    });
+  }
 }
 
 module.exports = Menu;
