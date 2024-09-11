@@ -2,7 +2,7 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-const { Spot, SectionLabel } = require('../models');
+const { Spot, SectionLabel, TagLabel } = require('../models');
 const { processSpotJsonData, processSpotExcelData } = require('../services/spotProcessing');
 const { extractSpotInfoSheet, extractMenuInfoSheet } = require('../services/dataProcessing');
 
@@ -277,9 +277,58 @@ router.post('/sectionLabelTable/subSection', async (req, res) => {
   }
 });
 
-// router.post("/spotTable/tagLabel", async (req, res) => {
+// card label의 tag 칼럼들 일괄 저장
+router.post('/cardLabelTable', async (req, res) => {
+  try {
+    const jsonData = await extractSpotInfoSheet();
 
-// })
+    for (let i = 0; i < jsonData.length; i++) {
+      const row = jsonData[i];
+      const spot_id = i + 1;
+
+      const { '동행인 카드': tag_1_raw, '소음정도 카드': tag_2_raw, '분위기 카드': tag_3_raw } = row;
+
+      const tag_1_mapping = {
+        '친한사람과 함께': 'friendly',
+        '동료와 함께': 'partner',
+        '상사와 함께': 'boss',
+        '임원과 함께': 'executive',
+        '거래처와 함께': 'vendor',
+        '외국인과 함께': 'foreigner',
+      };
+
+      const tag_2_mapping = {
+        조용한담소: 'quiet',
+        활발한수다: 'chatter',
+        시끌벅적한: 'noisy',
+      };
+
+      const tag_3_mapping = {
+        캐주얼한: 'casual',
+        모던한: 'modern',
+        격식있는: 'formal',
+        전통적인: 'traditional',
+        '이국적/이색적': 'exotic',
+      };
+
+      const tag_1 = tag_1_mapping[tag_1_raw] || null;
+      const tag_2 = tag_2_mapping[tag_2_raw] || null;
+      const tag_3 = tag_3_mapping[tag_3_raw] || null;
+
+      await TagLabel.create({
+        spot_id,
+        tag_1,
+        tag_2,
+        tag_3,
+      });
+    }
+
+    res.status(200).json({ message: 'Data saved successfully!' });
+  } catch (error) {
+    console.error('Error saving spot extra data:', error);
+    res.status(500).json({ error: 'Error saving spot extra data' });
+  }
+});
 
 router.post('/menuTable', async (req, res) => {
   try {
