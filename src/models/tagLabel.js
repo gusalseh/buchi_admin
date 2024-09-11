@@ -28,7 +28,7 @@ class TagLabel extends Sequelize.Model {
             'vendor', //거래처와 함께
             'foreigner', //외국인과 함께
           ],
-          allowNull: false,
+          allowNull: true,
         },
         tag_2: {
           type: DataTypes.ENUM,
@@ -37,12 +37,12 @@ class TagLabel extends Sequelize.Model {
             'chatter', //활발한수다
             'noisy', //시끌벅적한
           ],
-          allowNull: false,
+          allowNull: true,
         },
         tag_3: {
           type: DataTypes.ENUM,
           values: ['casual', 'modern', 'formal', 'traditional', 'exotic'],
-          allowNull: false,
+          allowNull: true,
         },
       },
       {

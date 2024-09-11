@@ -42,7 +42,7 @@ class SectionLabel extends Sequelize.Model {
             'medium', //12인 이하 추천
             'large', //13인 이상 추천
           ],
-          allowNull: false,
+          allowNull: true,
         },
         sub_section_2: {
           type: DataTypes.ENUM,
@@ -51,7 +51,7 @@ class SectionLabel extends Sequelize.Model {
             'heavy', //푸짐한
             'effective', //가성비 좋은
           ],
-          allowNull: false,
+          allowNull: true,
         },
         sub_section_3: {
           type: DataTypes.ENUM,
@@ -61,7 +61,7 @@ class SectionLabel extends Sequelize.Model {
             'whisky', //위스키
             'cocktail', //칵테일
           ],
-          allowNull: false,
+          allowNull: true,
         },
         sub_section_4: {
           type: DataTypes.ENUM,
@@ -70,7 +70,7 @@ class SectionLabel extends Sequelize.Model {
             'male_prefer', //남성이 좋아하는
             'female_prefer', //여성이 좋아하는
           ],
-          allowNull: false,
+          allowNull: true,
         },
         sub_section_5: {
           type: DataTypes.ENUM,
@@ -80,7 +80,7 @@ class SectionLabel extends Sequelize.Model {
             'rain', //비오는날
             'snow', //눈오는날
           ],
-          allowNull: false,
+          allowNull: true,
         },
       },
       {
