@@ -95,13 +95,15 @@ router.post('/spotTable/extraColumns', async (req, res) => {
 
       const open_day = openday_list[spot_id % 5];
 
+      let update_max_group_seats = max_group_seats == 0 ? 10 : max_group_seats;
+
       if (spot) {
         await spot.update({
           private_room,
           parking_lot: parseInt(parking_lot, 10),
           valet,
           corkage,
-          max_group_seats: parseInt(max_group_seats, 10),
+          max_group_seats: parseInt(update_max_group_seats, 10),
           tel,
           open_day,
           rental,
