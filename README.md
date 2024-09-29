@@ -1,54 +1,57 @@
 # buchi_admin
 
+![로고](./buchi_logo_full.png)
+
+## 서비스 개요
+
+"부장님의 취향" 서비스에서 운용하는 다양한 식당들의 정보를 처리하는 **데이터 처리 프로젝트**입니다.  
+초기에는 **역삼동 내의 식당**들에 대한 서비스가 이루어지고, 추후 **단계적으로 지역을 확장**해나갈 예정입니다.
+
+## 폴더구조
+
 backside working repo
 
+```
 /project-root
 │
+├── /aws
+│ └── s3.js
+│
 ├── /config
-│ ├── aws.js # AWS S3 관련 설정 파일
-│ ├── database.js # Sequelize 및 DB 설정 파일
-│ └── config.js # 기타 환경 설정 파일
+│ ├── aws.js
+│ └── config.js
 │
 ├── /controllers
-│ ├── fileController.js # 엑셀 파일 처리 관련 로직
-│ ├── imageController.js # 이미지 URL 처리 관련 로직
-│ └── index.js # 다른 컨트롤러들을 불러오는 모듈
+│ ├── dataGet.js
+│ └── spotInfoGet.js
 │
 ├── /models
-│ ├── index.js # Sequelize 초기화 및 모델들 불러오기
-│ ├── File.js # 파일 관련 DB 모델
-│ └── Image.js # 이미지 URL 관련 DB 모델
+│ ├── index.js
+│ ├── company.js
+│ ├── menu.js
+│ ├── review.js
+│ ├── sectionLabel.js
+│ ├── spot.js
+│ ├── tagLabel.js
+│ ├── user.js
+│ ├── userLocation.js
+│ └── visit.js
 │
-├── /routes
-│ ├── fileRoutes.js # 파일 관련 API 라우트
-│ ├── imageRoutes.js # 이미지 관련 API 라우트
-│ └── index.js # 다른 라우트들을 불러오는 모듈
+├── /router
+│ ├── dataRouter.js
+│ └── dbRouter.js
 │
 ├── /services
-│ ├── s3Service.js # AWS S3에서 파일을 다운로드하고 업로드하는 서비스 로직
-│ ├── excelService.js # 엑셀 파일을 파싱하고 데이터를 가공하는 로직
-│ └── dbService.js # 데이터베이스에 데이터를 저장하고 조회하는 로직
+│ ├── dataProcessing.js
+│ └── spotProcessing.js
 │
 ├── /utils
-│ ├── excelParser.js # 엑셀 파싱 관련 유틸리티 함수들
-│ ├── logger.js # 로깅 유틸리티
-│ └── validation.js # 데이터 검증 유틸리티
+│ ├── awsUtils.js
+│ ├── dataUilts.js
+│ └── dataConvert.js
 │
-├── /middlewares
-│ ├── errorHandler.js # 에러 처리 미들웨어
-│ └── authMiddleware.js # 인증 미들웨어 (필요 시)
-│
-├── /tests
-│ ├── controllers.test.js # 컨트롤러 유닛 테스트
-│ ├── services.test.js # 서비스 유닛 테스트
-│ └── routes.test.js # 라우트 유닛 테스트
-│
-├── /public # 정적 파일 디렉토리 (필요 시)
-│
-├── /scripts # 배포 및 스크립트 파일 (필요 시)
-│
-├── .env # 환경 변수 설정 파일
-├── .gitignore # Git에서 무시할 파일들
-├── package.json # npm 패키지 및 스크립트 설정 파일
-├── app.js # Express 애플리케이션 초기화 파일
-└── server.js # 서버 실행 파일
+├── .env
+├── .gitignore
+├── package.json
+└── service.js
+```
