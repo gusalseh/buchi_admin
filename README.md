@@ -1,14 +1,17 @@
 # buchi_admin
 
-![로고](./frontend/public/buchi_logo_full.png)
+![로고](./buchi_logo_full.png)
 
 ## 서비스 개요
 
-"부장님의 취향" 서비스에서 운용하는 다양한 식당들의 정보를 처리하는 데이터 처리 프로젝트입니다.  
-초기에는 역삼동 내의 식당들에 대한 서비스가 이루어지고, 추후 단계적으로 지역을 확장해나갈 예정입니다.
+"부장님의 취향" 서비스에서 운용하는 다양한 식당들의 정보를 처리하는 **데이터 처리 프로젝트**입니다.  
+초기에는 **역삼동 내의 식당**들에 대한 서비스가 이루어지고, 추후 **단계적으로 지역을 확장**해나갈 예정입니다.
+
+## 폴더구조
 
 backside working repo
 
+```
 /project-root
 │
 ├── /aws
@@ -51,3 +54,4 @@ backside working repo
 ├── .gitignore
 ├── package.json
 └── service.js
+```
